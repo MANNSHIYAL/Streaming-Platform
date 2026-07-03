@@ -1,0 +1,111 @@
+<div class="container-fluid min-vh-100 bg-netflix-black text-white py-5 px-3">
+    <!-- Brand Header -->
+    <div class="mx-auto mb-5" style="max-width: 600px;">
+        <h1 class="text-primary fw-black tracking-tight m-0 display-6">
+            BingeWatch <span class="text-light fs-6 fw-light tracking-wide ms-2">Studio</span>
+        </h1>
+    </div>
+
+    <!-- Main Upload Card Container -->
+    <div class="card bg-dark border-secondary mx-auto shadow-lg overflow-hidden position-relative"
+        style="max-width: 600px;">
+
+        <!-- State 1: Drag & Drop Drop Zone Area -->
+        @if (!selectedFile && !isUploading && !uploadSuccess) {
+        <div class="drop-zone m-4 p-5 rounded-3 text-center border border-2 border-dashed border-secondary transition-base"
+            [class.border-primary]="isDragOver" [class.bg-danger-subtle-alpha]="isDragOver"
+            (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)"
+            (click)="fileInput.click()" style="cursor: pointer;">
+
+            <input #fileInput type="file" accept="video/*" class="d-none" (change)="onFileSelected($event)" />
+
+            <div class="display-4 mb-3 text-primary">🎬</div>
+            <h2 class="h5 fw-bold mb-2 text-white">Select a video to publish</h2>
+            <p class="text-muted small mb-1">Drag and drop your file here, or browse your device</p>
+            <p class="text-secondary mb-4" style="font-size: 0.75rem;">MP4, MKV, or MOV • Max 4K resolution recommended
+            </p>
+            <button class="btn btn-primary btn-lg px-4 fw-bold shadow">Browse Files</button>
+        </div>
+        }
+
+        <!-- State 1.5: Metadata Entry Form -->
+        @if (selectedFile && !isUploading && !uploadSuccess) {
+        <div class="p-4">
+            <h3 class="h5 fw-bold mb-4 text-primary border-bottom border-secondary pb-2">Video Details</h3>
+
+            <form (ngSubmit)="startUploadProcessing()">
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-semibold">File Selected</label>
+                    <input type="text" class="form-control bg-black text-secondary border-secondary"
+                        [value]="uploadData.fileName" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label for="videoTitle" class="form-label text-white small fw-semibold">Title <span
+                            class="text-primary">*</span></label>
+                    <input type="text" id="videoTitle" name="title"
+                        class="form-control bg-black text-white border-secondary" [(ngModel)]="uploadData.title"
+                        placeholder="Enter video display name" required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="videoDesc" class="form-label text-white small fw-semibold">Description</label>
+                    <textarea id="videoDesc" name="description"
+                        class="form-control bg-black text-white border-secondary" [(ngModel)]="uploadData.description"
+                        rows="4" placeholder="Tell viewers about your video"></textarea>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-end border-top border-secondary pt-3">
+                    <button type="button" class="btn btn-outline-secondary btn-sm px-3 text-white"
+                        (click)="resetUpload()">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4 btn-sm fw-bold"
+                        [disabled]="!uploadData.title">Publish to Pipeline</button>
+                </div>
+            </form>
+        </div>
+        }
+
+        <!-- State 2: Uploading Progress Feedback Spinner View -->
+        @if (isUploading) {
+        <div class="p-5 text-center">
+            <div class="spinner-border text-primary mb-4" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h2 class="h5 fw-bold text-white">Uploading "{{ uploadData.title }}"</h2>
+            <p class="text-primary fw-semibold text-break my-3 px-3 small">{{ uploadData.fileName }}</p>
+
+            <div
+                class="d-inline-block bg-black text-white px-3 py-1 small fw-bold rounded border-start border-primary border-3 pulse-anim mb-3">
+                PROCESSING PIPELINE ACTIVE
+            </div>
+            <p class="text-muted small mx-auto m-0" style="max-width: 400px;">
+                Slicing metadata into binary stream buffers and cloud chunks...
+            </p>
+        </div>
+        }
+
+        <!-- State 3: Stream Pipeline Ingestion Complete Success Screen View -->
+        @if (uploadSuccess) {
+        <div class="p-5 text-center">
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4 shadow"
+                style="width: 60px; height: 60px; font-size: 24px;">
+                ✓
+            </div>
+            <h2 class="h5 fw-bold text-white">Upload Complete!</h2>
+            <p class="text-primary fw-semibold text-break my-3 px-3 small">{{ uploadData.title }}</p>
+            <p class="text-muted small mb-4">Your video details and stream payload have been completely ingested.</p>
+            <button class="btn btn-outline-light px-4 btn-sm" (click)="resetUpload()">
+                Upload Another Video
+            </button>
+        </div>
+        }
+
+        <!-- System Pipeline Runtime Context Error Toast Notification Bar Banner -->
+        @if (uploadError) {
+        <div class="bg-danger bg-opacity-20 border-top border-danger p-3 d-flex align-items-center gap-3">
+            <span class="fs-5">⚠️</span>
+            <div class="small text-white fw-medium">{{ uploadError }}</div>
+        </div>
+        }
+    </div>
+</div>

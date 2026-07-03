@@ -1,0 +1,97 @@
+// 1. Overwrite Template System Color Variables
+$netflix-red: #E50914;
+$netflix-red-hover: #B81D24;
+$netflix-black: #141414;
+$netflix-dark-card: #181818;
+$netflix-input-fields: #232323;
+$netflix-borders: rgba(255, 255, 255, 0.1);
+
+// Text configurations
+$netflix-muted-gray: #808080;
+$netflix-dim-gray: #A3A3A3;
+
+// 2. Custom Theming Rules map onto native Bootstrap utilities
+.bg-netflix-black { 
+  background-color: $netflix-black !important; 
+}
+
+.card.bg-dark {
+  background-color: $netflix-dark-card !important;
+}
+
+.border-secondary, .border-bottom.border-secondary {
+  border-color: $netflix-borders !important;
+}
+
+// Text Utilities Override mappings
+.text-primary { color: $netflix-red !important; }
+.text-muted { color: $netflix-muted-gray !important; }
+.text-secondary { color: $netflix-dim-gray !important; }
+.fw-black { font-weight: 900; }
+.tracking-tight { letter-spacing: -0.04em; }
+.tracking-wide { letter-spacing: 0.04em; }
+
+// 3. Form input & Component element Overrides
+.form-control {
+  &.bg-black {
+    background-color: $netflix-input-fields !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    
+    &:focus {
+      background-color: #2a2a2a !important;
+      color: #ffffff !important;
+      border-color: $netflix-muted-gray !important;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    &[readonly] {
+      opacity: 0.6;
+    }
+  }
+}
+
+// Button States Mapping
+.btn-primary {
+  background-color: $netflix-red !important;
+  border-color: $netflix-red !important;
+  color: #ffffff !important;
+  
+  &:hover:not(:disabled) {
+    background-color: $netflix-red-hover !important;
+    border-color: $netflix-red-hover !important;
+  }
+  
+  &:disabled {
+    background-color: #551114 !important;
+    border-color: #551114 !important;
+    color: $netflix-muted-gray !important;
+    opacity: 0.5;
+  }
+}
+
+.btn-outline-secondary {
+  border-color: $netflix-muted-gray !important;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-color: #ffffff !important;
+  }
+}
+
+// Micro Interaction Animation rules
+.bg-danger-subtle-alpha {
+  background-color: rgba(229, 9, 20, 0.08) !important;
+}
+
+.transition-base {
+  transition: all 0.2s ease-in-out;
+}
+
+.pulse-anim {
+  animation: pulse-border-opacity 2s infinite ease-in-out;
+}
+
+@keyframes pulse-border-opacity {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}

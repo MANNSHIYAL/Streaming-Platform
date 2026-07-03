@@ -1,0 +1,86 @@
+<!-- video-stream.component.html -->
+<div class="relative w-full h-full group bg-black select-none">
+
+    <video #videoPlayer class="w-full h-full cursor-pointer" [muted]="isMuted" (click)="togglePlay()"
+        (timeupdate)="onTimeUpdate()" (loadedmetadata)="onLoadedMetadata()"></video>
+
+    <!-- Buffering/Loading Spinner -->
+    @if (isBuffering) {
+    <div class="absolute inset-0 flex items-center justify-center bg-black/40 pointer-events-none">
+        <div class="w-12 h-12 border-4 border-t-red-600 border-gray-300 rounded-full animate-spin"></div>
+    </div>
+    }
+
+    <!-- Custom Control Overlay -->
+    <div
+        class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col gap-2">
+
+        <!-- Progress Bar (With Hover Thumbnails) -->
+        <div #progressBar
+            class="w-full bg-gray-600 h-1.5 hover:h-2.5 rounded-full cursor-pointer relative transition-all duration-150"
+            (mousedown)="startScrubbing($event)" (mousemove)="onProgressBarHover($event)" (mouseup)="stopScrubbing()"
+            (mouseleave)="hidePreview()">
+            @if (showThumbnail) {
+            <div class="absolute bottom-6 -translate-x-1/2 border-2 border-white rounded shadow-md pointer-events-none bg-black"
+                [style.left.px]="hoverX">
+                <div [style.width.px]="thumbWidth" [style.height.px]="thumbHeight"
+                    [style.background-image]="'url(' + spriteUrl + ')'"
+                    [style.background-position]="thumbX + 'px ' + thumbY + 'px'"></div>
+                <div class="text-center text-xs text-white bg-black/80 py-0.5">{{ hoverTimeLabel }}</div>
+            </div>
+            }
+            <div class="bg-red-600 h-full rounded-full pointer-events-none" [style.width.%]="progress"></div>
+        </div>
+
+        <!-- Control Buttons Menu Dashboard -->
+        <div class="flex items-center justify-between text-white text-sm mt-1">
+            <div class="flex items-center gap-4">
+                <button (click)="togglePlay()" class="font-bold hover:text-red-500">{{ isPlaying ? 'Pause' : 'Play'
+                    }}</button>
+                <span>{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+            </div>
+
+            <div class="flex items-center gap-4 relative">
+                <!-- Quality Selector Trigger Dropdown Button -->
+                <div class="relative">
+                    <button (click)="toggleQualityMenu()"
+                        class="hover:text-red-500 flex items-center gap-1 font-semibold focus:outline-none">
+                        ⚙️ {{ currentQualityLabel }}
+                    </button>
+
+                    <!-- Quality Dropdown Panel Options List -->
+                    @if (showQualityMenu) {
+                    <div
+                        class="absolute bottom-8 right-0 bg-zinc-900 border border-zinc-700 rounded shadow-xl w-32 overflow-hidden flex flex-col z-50">
+                        <!-- Auto Quality Toggle Switch Options Row -->
+                        <button (click)="changeQuality(-1)"
+                            class="px-3 py-2 text-left hover:bg-zinc-800 text-xs flex items-center justify-between"
+                            [class.text-red-500]="currentLevelIndex === -1">
+                            <span>Auto</span>
+                            @if(currentLevelIndex === -1){
+                            <span>✓</span>
+                            }
+                        </button>
+
+                        <!-- Concrete Discrete Quality Items Iteration Mapping Loop -->
+                        @for (level of availableQualities; track $index) {
+                        <button (click)="changeQuality(level.index)"
+                            class="px-3 py-2 text-left hover:bg-zinc-800 text-xs flex items-center justify-between"
+                            [class.text-red-500]="currentLevelIndex === level.index">
+                            <span>{{ level.height }}p</span>
+                            @if (currentLevelIndex === level.index) {
+                            <span>✓</span>
+                            }
+                        </button>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <button (click)="toggleMute()">{{ isMuted ? 'Unmute' : 'Mute' }}</button>
+                <button (click)="toggleFullscreen()">Fullscreen</button>
+            </div>
+        </div>
+
+    </div>
+</div>

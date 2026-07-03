@@ -1,0 +1,14 @@
+/* Netflix Font Stack */
+body {
+  font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Input Focus Glow */
+input:focus {
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.5);
+}
+
+/* Smooth transitions everywhere */
+* {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

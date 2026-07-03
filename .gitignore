@@ -1,0 +1,67 @@
+# =========================================================================
+# Infrastructure / DevOps Assets
+# =========================================================================
+# Ignores local infra state, but keeps the root configuration visible
+/infrastructure/
+
+# =========================================================================
+# Angular Subfolder: bingewatch
+# =========================================================================
+/bingewatch/dist/
+/bingewatch/tmp/
+/bingewatch/out-tsc/
+/bingewatch/bazel-out/
+/bingewatch/node_modules/
+/bingewatch/.angular/
+
+# =========================================================================
+# .NET Subfolders (APIGateway, BlobUpload, Auth, Notification, TranscodingWorker)
+# =========================================================================
+# Compiled build binaries
+/**/bin/
+/**/obj/
+/**/out/
+
+# User-specific local environment settings
+/**/*.user
+/**/*.userosscache
+/**/*.suo
+/**/.userprefs
+/**/.vs/
+
+# Local app configuration overrides
+/**/appsettings.Development.json
+/**/appsettings.local.json
+
+# Clean up redundant legacy inner git tracking files
+/Auth.gitattributes
+/Auth.gitignore
+
+# =========================================================================
+# Universal / Global Rules (Applies to all folders)
+# =========================================================================
+# IDEs and Editors
+/.idea/
+/.project
+/.classpath
+/.c9/
+/*.launch
+/.settings/
+/*.sublime-workspace
+/.vscode/*
+!/.vscode/settings.json
+!/.vscode/tasks.json
+!/.vscode/launch.json
+!/.vscode/extensions.json
+.history/
+
+# Log and Runtime files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,45 @@
+<div class="bg-black min-h-screen text-white">
+    <!-- Navbar -->
+    <nav class="fixed top-0 z-50 w-full bg-linear-to-b from-black/80 to-transparent flex items-center px-10 py-5">
+        <img src="./assets/bingewatch-logo.png" class="h-12">
+        <div class="ml-auto flex gap-8 text-sm">
+            <a routerLink="/browse" class="hover:text-gray-300, cursor-pointer">Home</a>
+            <a routerLink="/video-upload" class="hover:text-gray-300 cursor-pointer">Upload Video</a>
+            <a class="hover:text-gray-300 cursor-pointer" (click)="logOut()">Logout</a>
+            <!-- Profile avatar with dropdown -->
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+
+    <div [@fadeAnimation] class="relative h-screen bg-cover"
+        [style.background-image]="featuredMovie() && featuredMovie().image ? 'url(' + featuredMovie().image + ')' : 'none'">
+        <div class="absolute inset-0 bg-linear-to-r from-black via-black/70 to-transparent"></div>
+        <div class="absolute bottom-1/3 left-10 max-w-md">
+            <h1 class="text-6xl font-bold mb-4">{{ featuredMovie() && featuredMovie().title ? featuredMovie().title : ''
+                }}</h1>
+            <p class="text-lg mb-6">{{ featuredMovie() && featuredMovie().description ? featuredMovie().description : ''
+                }}</p>
+            <button (click)="playFeatured()"
+                class="bg-white text-black px-8 py-3 rounded font-bold text-lg flex items-center gap-2 hover:bg-gray-300 cursor-pointer">
+                ▶ Play
+            </button>
+        </div>
+    </div>
+
+    <!-- Movie Rows (Carousels) -->
+    @for (row of movieRows(); track row.title) {
+    <div class="px-10 mb-8">
+        <h2 class="text-xl mb-3 font-semibold">{{ row.title }}</h2>
+        <div class="flex gap-2 overflow-x-auto pb-4 snap-x scrollbar-hide">
+            @for (movie of row.movies; track movie.id) {
+            <div class="flex-none w-48 cursor-pointer transition-transform hover:scale-110 duration-300"
+                (click)="selectMovie(movie)" [@hoverScale]>
+                <img [src]="movie.image" class="rounded shadow-lg object-cover h-72 w-full">
+                <div class="text-sm mt-2 line-clamp-1">{{ movie.title }}</div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</div>

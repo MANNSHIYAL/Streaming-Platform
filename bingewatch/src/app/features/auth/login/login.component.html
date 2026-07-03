@@ -1,0 +1,82 @@
+<!-- Login Page - Netflix Exact Style (Angular Component) -->
+<div class="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
+    <!-- Background Image with Gradient Overlay (Netflix Style) -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style="background-image: url('https://assets.nflxext.com/ffe/siteui/vlv3/9d3533b2-0e2b-40b2-9e9e-9c8d2e4f5e0e/0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f.jpg');">
+        <!-- Dark Gradient Overlay -->
+        <div class="absolute inset-0 bg-linear-to-r from-black via-black/70 to-black/90"></div>
+    </div>
+
+    <!-- Navbar (Top Left Logo + Language) -->
+    <nav class="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6">
+        <img src="./assets/bingewatch.svg" alt="BingeWatch" class="h-10 w-auto">
+
+        <div class="flex items-center gap-4">
+            <!-- Language Selector -->
+            <div class="relative">
+                <select
+                    class="bg-black/80 border border-gray-500 text-white px-4 py-1 rounded text-sm appearance-none pr-8">
+                    <option>English</option>
+                    <option>Hindi</option>
+                </select>
+            </div>
+            <!-- Sign In Button (on register page) -->
+        </div>
+    </nav>
+
+    <!-- Login Card -->
+    <div
+        class="relative z-10 bg-black/75 backdrop-blur-md w-full max-w-md mx-4 p-12 rounded-md shadow-2xl border border-gray-800">
+        <h1 class="text-white text-4xl font-medium mb-10 text-left">Sign In</h1>
+
+        <form (ngSubmit)="onLogin()" class="space-y-6">
+            <!-- Email Input -->
+            <div class="relative">
+                <input type="text" [(ngModel)]="userLogin.user" name="user" required
+                    placeholder="Email or User Name"
+                    class="w-full bg-zinc-900 border border-zinc-700 focus:border-white text-white placeholder:text-gray-400 px-5 py-4 rounded text-base outline-none transition-all">
+            </div>
+
+            <!-- Password Input -->
+            <div class="relative">
+                <input type="password" [(ngModel)]="userLogin.password" name="password" required placeholder="Password"
+                    class="w-full bg-zinc-900 border border-zinc-700 focus:border-white text-white placeholder:text-gray-400 px-5 py-4 rounded text-base outline-none transition-all">
+            </div>
+
+            <!-- Sign In Button -->
+            <button type="submit"
+                class="w-full bg-red-600 hover:bg-red-700 active:bg-red-800 transition-colors text-white py-4 rounded text-lg font-medium mt-2 cursor-pointer">
+                Sign In
+            </button>
+
+            <!-- Remember Me + Help -->
+            <div class="flex items-center justify-between text-sm text-gray-400">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" class="w-4 h-4 accent-red-600">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="hover:underline">Need help?</a>
+            </div>
+
+            <!-- Sign up link -->
+            <div class="text-gray-400 text-center pt-4">
+                New to BingeWatch?
+                <a routerLink="/register" class="text-white hover:underline ml-1 cursor-pointer">Sign up now</a>.
+            </div>
+
+            <!-- CAPTCHA / Footer note -->
+            <p class="text-xs text-gray-500 leading-relaxed text-center pt-6">
+                This page is protected by Google reCAPTCHA to ensure you're not a bot.
+                <a href="#" class="text-blue-500 hover:underline">Learn more</a>.
+            </p>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="absolute bottom-0 left-0 right-0 text-gray-400 text-sm px-12 py-10 bg-black/50">
+        <div class="max-w-4xl mx-auto">
+            Questions? <a href="#" class="underline">Contact us</a>.
+            <!-- More links in real Netflix -->
+        </div>
+    </footer>
+</div>

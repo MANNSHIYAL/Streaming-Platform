@@ -1,0 +1,16 @@
+/* Replace .scroll-container with your element's class name */
+.scroll-container {
+    /* 1. Hide for Chrome, Safari, Opera, and modern Edge */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* 2. Hide for Firefox */
+    scrollbar-width: none;
+
+    /* 3. Hide for legacy Internet Explorer and Edge */
+    -ms-overflow-style: none;
+    
+    /* 4. Ensure scrolling is still enabled */
+    overflow: auto; 
+}

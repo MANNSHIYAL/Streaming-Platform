@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+
+html, body { height: 100%; }
+body { font-family: 'Netflix Sans', system-ui, sans-serif;
+  background-color: #141414; }
+
+  /* Apply to the entire page */
+html, body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+    display: none;
+}

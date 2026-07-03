@@ -1,0 +1,107 @@
+{
+    //"GlobalConfiguration": {
+    //    "BaseUrl": "http://localhost:8000"
+    //},
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/api/auth/valid-session",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "auth-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/auth/videos/verify",
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {
+                "ProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RouteClaimsRequirement": {
+                "Role": [ "ADMIN", "UPLOADER","USER" ]
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/auth/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "auth-service",
+                    "Port": 8081
+                }
+            ],
+            "UpstreamPathTemplate": "/auth/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
+            //"RateLimitOptions": {
+            //    "EnableRateLimiting": true,
+            //    "Period": "10s",
+            //    "Limit": 3,
+            //    "PeriodTimespan": 10
+            //}
+            "RateLimitOptions": {
+                "ClientWhitelist": [],
+                "EnableRateLimiting": true,
+                "Period": "10s",
+                "PeriodTimespan": 1,
+                "Limit": 3,
+                "ClientIdHeader": "X-Client-Id"
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/UploadVideo/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "blob-service",
+                    "Port": 8082
+                }
+            ],
+            "UpstreamPathTemplate": "/upload/{everything}",
+            "UpstreamHttpMethod": [ "POST" ],
+            "AuthenticationOptions": {
+                "ProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RouteClaimsRequirement": {
+                "Role": ["ADMIN", "UPLOADER"]
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/UploadVideo/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "blob-service",
+                    "Port": 8082
+                }
+            ],
+            "UpstreamPathTemplate": "/movie/{everything}",
+            "UpstreamHttpMethod": [ "GET" ],
+            "AuthenticationOptions": {
+                "ProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
+            "RouteClaimsRequirement": {
+                "Role": [ "ADMIN", "UPLOADER","USER" ]
+            }
+        }
+
+        //{
+        //    "DownstreamPathTemplate": "/api/stream/{everything}",
+        //    "DownstreamScheme": "http",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "streaming-service",
+        //            "Port": 8083
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/stream/{everything}",
+        //    "UpstreamHttpMethod": [ "Get" ],
+        //    "AuthenticationOptions": {
+        //        "ProviderKey": "Bearer",
+        //        "AllowedScopes": []
+        //    }
+        //}
+    ]
+}

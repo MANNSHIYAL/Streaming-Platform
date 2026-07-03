@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="276.742" viewBox="0 0 1024 276.742" aria-labelledby="title desc" role="img">
+  <title id="title">BINGEWATCH Logo</title>
+  <desc id="desc">BINGEWATCH in Netflix 2015 logo style</desc>
+  
+  <!-- Much wider curve path to fit full "BINGEWATCH" text -->
+  <defs>
+    <path id="text-curve" d="M 15 235 
+                           Q 180 212 512 205 
+                           Q 844 212 1009 235" />
+  </defs>
+
+  <!-- BINGEWATCH text -->
+  <text 
+    font-family="'Helvetica Neue', Arial, 'Arial Black', sans-serif" 
+    font-size="148" 
+    font-weight="900" 
+    letter-spacing="-6.8px" 
+    fill="#d81f26">
+    <textPath href="#text-curve" startOffset="50%" text-anchor="middle">
+      BingeWatch
+    </textPath>
+  </text>
+</svg>
